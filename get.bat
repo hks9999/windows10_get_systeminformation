@@ -1,94 +1,121 @@
 @echo off
 
-echo.
-echo Current Directory : %cd%
-echo.
+SET PATH=%PATH%;C:\WINDOWS\SYSTEM32
 
-SET /P variable="FolderName : "
-set SAVE_DIR=%variable%\
+bcdedit >>nul 
+if %errorlevel% == 1 goto noadmin
+
+set current_path=%~dp0
+echo Current Path  : %current_path%
+
+echo.
+set /p variable_IP=" IP Address:"
+set /p variable_user="Username: "
+set /p variable_location="Location: "
+
+set SAVE_DIR=%current_path%00_%variable_IP%\
+
 set SAVE_FILE=%SAVE_DIR%result.txt
+set SAVE_DIR_EXPORT=%SAVE_DIR%\export
 
 mkdir %SAVE_DIR%
+mkdir %SAVE_DIR_EXPORT%
+
+echo . 
+echo Logfile = "%SAVE_FILE%" 
+echo.
 
 echo. > %SAVE_FILE%
-echo ************************************************************************************************* >> %SAVE_FILE%
-echo Date / Time >> %SAVE_FILE%
-echo ************************************************************************************************* >> %SAVE_FILE%
-echo "%date% %time%" >> %SAVE_FILE%
+
+echo ******************************************************************************** >> %SAVE_FILE%
+echo PC  >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
+echo Datetime : "%date% %time%" >> %SAVE_FILE%
+echo PC User : %variable_user% >> %SAVE_FILE%
+echo PC Location: %variable_location% >> %SAVE_FILE%
 echo. >> %SAVE_FILE%
 
-echo ************************************************************************************************* >> %SAVE_FILE%
-echo systeminfo >> %SAVE_FILE%
-echo ************************************************************************************************* >> %SAVE_FILE%
-systeminfo >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
+echo WHOAMI >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
+whoami  >> %SAVE_FILE%
 echo. >> %SAVE_FILE%
 
-echo ************************************************************************************************* >> %SAVE_FILE%
-echo net user >> %SAVE_FILE%
-echo ************************************************************************************************* >> %SAVE_FILE%
-net user >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
+echo SET  >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
+set >> %SAVE_FILE%
 echo. >> %SAVE_FILE%
 
-echo ************************************************************************************************* >> %SAVE_FILE%
-echo ipconfig >> %SAVE_FILE%
-echo ************************************************************************************************* >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
+echo ARP >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
+arp -a  >> %SAVE_FILE%
+echo. >> %SAVE_FILE%
+
+echo ******************************************************************************** >> %SAVE_FILE%
+echo SYSTEMINFO >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
+systeminfo  >> %SAVE_FILE%
+echo. >> %SAVE_FILE%
+
+echo ******************************************************************************** >> %SAVE_FILE%
+echo NET USER >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
+net share >> %SAVE_FILE%
+net user  >> %SAVE_FILE%
+echo. >> %SAVE_FILE%
+
+echo ******************************************************************************** >> %SAVE_FILE%
+echo IPCONFIG /ALL >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
 ipconfig /all >> %SAVE_FILE%
 echo. >> %SAVE_FILE%
 
-echo ************************************************************************************************* >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
+echo tasklist >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
+tasklist /v>> %SAVE_FILE%
+tasklist /m>> %SAVE_FILE%
+tasklist /svc>> %SAVE_FILE%
+echo. >> %SAVE_FILE%
+
+echo ******************************************************************************** >> %SAVE_FILE%
+echo dir "temp"t >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
+dir %temp% /od /a >> %SAVE_FILE%
+echo. >> %SAVE_FILE%
+
+echo ******************************************************************************** >> %SAVE_FILE%
 echo netstat -nao >> %SAVE_FILE%
-echo ************************************************************************************************* >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
 netstat -nao >> %SAVE_FILE%
 echo. >> %SAVE_FILE%
 
-echo ************************************************************************************************* >> %SAVE_FILE%
-echo tasklist /v >> %SAVE_FILE%
-echo ************************************************************************************************* >> %SAVE_FILE%
-tasklist /v >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
+echo prefetch file list >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
+dir c:\windows\prefetch /OD >> %SAVE_FILE%
 echo. >> %SAVE_FILE%
 
-echo ************************************************************************************************* >> %SAVE_FILE%
-echo reg query HKLM\system\currentcontrolset\enum\usbstor >> %SAVE_FILE%
-echo ************************************************************************************************* >> %SAVE_FILE%
-reg query HKLM\system\currentcontrolset\enum\usbstor >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
+echo reg query Compatibility Assistant\Store >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
+reg query "HKCU\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store" >> %SAVE_FILE%
+reg query "HKLM\SYSTEM\ControlSet001\Control\Session Manager\AppCompatCache" >> %SAVE_FILE%
 echo. >> %SAVE_FILE%
+reg query "HKCU\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" >> %SAVE_FILE%
 
-echo ************************************************************************************************* >> %SAVE_FILE%
-echo reg query "HKCU\Software\Microsoft\Terminal Server Client\Servers" >> %SAVE_FILE%
-echo reg query "HKCU\Software\Microsoft\Terminal Server Client\Default" >> %SAVE_FILE%
-echo ************************************************************************************************* >> %SAVE_FILE%
-reg query "HKCU\Software\Microsoft\Terminal Server Client\Servers" >> %SAVE_FILE%
-reg query "HKCU\Software\Microsoft\Terminal Server Client\Default" >> %SAVE_FILE%
-echo. >> %SAVE_FILE%
-
-echo ************************************************************************************************* >> %SAVE_FILE%
-echo reg query HKLM\system\currentcontrolset\enum\usbstor >> %SAVE_FILE%
-echo ************************************************************************************************* >> %SAVE_FILE%
-reg query HKLM\system\currentcontrolset\enum\usbstor >> %SAVE_FILE%
-echo. >> %SAVE_FILE%
-
-
-echo ************************************************************************************************* >> %SAVE_FILE%
-echo wmic diskdrive >> %SAVE_FILE%
-echo ************************************************************************************************* >> %SAVE_FILE%
-wmic diskdrive list brief /format:list>> %SAVE_FILE%
-echo. >> %SAVE_FILE%
-
-echo ************************************************************************************************* >> %SAVE_FILE%
-echo wmic logicaldisk >> %SAVE_FILE%
-echo ************************************************************************************************* >> %SAVE_FILE%
-wmic logicaldisk list brief /format:list>> %SAVE_FILE%
-echo. >> %SAVE_FILE%
-
-echo *************************************************************************************************
-echo getting filelist ...
-echo *************************************************************************************************
-
-dir/s/a c:\>> %SAVE_FILE%.c_drive_all_files.txt
-echo "getting filelist ok"
-
-echo "find string ..."
-findstr "TorBrowser" %SAVE_FILE%.c_drive_all_files.txt >> %SAVE_FILE%.TorBrowser.txt
-findstr "wallet.dat" %SAVE_FILE%.c_drive_all_files.txt >> %SAVE_FILE%.wallet.dat.txt
+echo ""
+echo "*********************************************************************************************************************"
+echo "************************************************* 종료  *************************************************************"
+echo "*********************************************************************************************************************"
 
 pause
+exit
+
+:noadmin 
+echo "반드시 관리자 권한으로 실행하세요."
+echo.
+pause 
+exit
