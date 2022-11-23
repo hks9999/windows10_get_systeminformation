@@ -99,6 +99,12 @@ dir c:\windows\prefetch /OD >> %SAVE_FILE%
 echo. >> %SAVE_FILE%
 
 echo ******************************************************************************** >> %SAVE_FILE%
+echo RunMRU >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
+reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU" >> %SAVE_FILE%
+echo. >> %SAVE_FILE%
+
+echo ******************************************************************************** >> %SAVE_FILE%
 echo reg query Compatibility Assistant\Store >> %SAVE_FILE%
 echo ******************************************************************************** >> %SAVE_FILE%
 reg query "HKCU\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store" >> %SAVE_FILE%
