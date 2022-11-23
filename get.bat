@@ -9,7 +9,7 @@ set current_path=%~dp0
 echo Current Path  : %current_path%
 
 echo.
-set /p variable_IP=" IP Address:"
+set /p variable_IP="IP Address:"
 set /p variable_user="Username: "
 set /p variable_location="Location: "
 
