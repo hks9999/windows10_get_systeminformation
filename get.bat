@@ -112,6 +112,12 @@ reg query "HKLM\SYSTEM\ControlSet001\Control\Session Manager\AppCompatCache" >> 
 echo. >> %SAVE_FILE%
 reg query "HKCU\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" >> %SAVE_FILE%
 
+echo ******************************************************************************** >> %SAVE_FILE%
+echo SRUDB.dat >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
+copy %SYSTEM%\sru\srudb.dat %SAVE_DIR%
+echo. >> %SAVE_FILE%
+
 echo ""
 echo "*********************************************************************************************************************"
 echo "************************************************* End  *************************************************************"
