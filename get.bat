@@ -64,6 +64,7 @@ echo NET USER >> %SAVE_FILE%
 echo ******************************************************************************** >> %SAVE_FILE%
 net share >> %SAVE_FILE%
 net user  >> %SAVE_FILE%
+net localgroup Administrators >> %SAVE_FILE%
 echo. >> %SAVE_FILE%
 
 echo ******************************************************************************** >> %SAVE_FILE%
@@ -81,10 +82,17 @@ tasklist /svc>> %SAVE_FILE%
 echo. >> %SAVE_FILE%
 
 echo ******************************************************************************** >> %SAVE_FILE%
-echo dir "temp"t >> %SAVE_FILE%
+echo dir "temp" >> %SAVE_FILE%
 echo ******************************************************************************** >> %SAVE_FILE%
 dir %temp% /od /a >> %SAVE_FILE%
 echo. >> %SAVE_FILE%
+
+echo ******************************************************************************** >> %SAVE_FILE%
+echo dir "ProgramData" >> %SAVE_FILE%
+echo ******************************************************************************** >> %SAVE_FILE%
+dir c:\programdata /od /a >> %SAVE_FILE%
+echo. >> %SAVE_FILE%
+
 
 echo ******************************************************************************** >> %SAVE_FILE%
 echo netstat -nao >> %SAVE_FILE%
@@ -115,22 +123,8 @@ reg query "HKCU\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Laye
 echo ******************************************************************************** >> %SAVE_FILE%
 echo SRUDB.dat >> %SAVE_FILE%
 echo ******************************************************************************** >> %SAVE_FILE%
-copy %SYSTEM%\sru\srudb.dat %SAVE_DIR%
+copy %windir%\system32\sru\srudb.dat %SAVE_DIR%
 echo. >> %SAVE_FILE%
-
-> hostname
-> systeminfo
-> net user
-> query user
-> route print
-> ipconfig /all
-> arp -a
-> netstat -ano
-> tasklist
-> tasklist /svc
-
-
-
 echo ""
 echo "*********************************************************************************************************************"
 echo "************************************************* End  *************************************************************"
